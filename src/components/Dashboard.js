@@ -8,7 +8,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import QuestionHome from './QuestionHome'
 import Grid from '@material-ui/core/Grid';
 import List from './List';
 import { connect } from 'react-redux'
@@ -106,8 +105,9 @@ function mapStateToProps({authedUser, questions}) {
 const allQuestions = Object.values(questions)
 const answeredQ = allQuestions.filter((question)=>
 {
-  const votes = question['optionOne']['votes']
-  return votes.includes(authedUser) || votes.includes(authedUser)
+  const votes1 = question['optionOne']['votes']
+  const votes2 = question['optionTwo']['votes']
+  return votes1.includes(authedUser) || votes2.includes(authedUser)
 })
 const unansweredQ =  allQuestions.filter((question)=>(!answeredQ.includes(question)))
   answeredQ.sort((a,b)=>a.timestamp-b.timestamp)

@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import CardActions from '@material-ui/core/CardActions';
 import { connect } from 'react-redux';
-
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -39,9 +39,7 @@ function QuestionHome(props) {
 
   const viewPoll = (e) => {
     e.preventDefault()
-     
-    //alert(props.id)
-    // TODO ADD THE FUNCTION IMP
+    props.history.push(`/question/${props.id}`);
 }
   return (
     <>
@@ -84,4 +82,4 @@ function mapStateToProps({users}, {question}) {
   const avatar = user['avatarURL']
   return {name, avatar, id}
 }
-export default connect(mapStateToProps)(QuestionHome)
+export default withRouter(connect(mapStateToProps)(QuestionHome))

@@ -8,7 +8,7 @@ import { red } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container'
 import ShowChartOutlinedIcon from '@material-ui/icons/ShowChartOutlined';
 import Typography from '@material-ui/core/Typography';
-import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined';
+import { connect } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,48 +32,90 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Unanswered() {
+function Answered(props) {
     const classes = useStyles();
-
-
+    if (!props.exist) {
+      return (<pr>THIS QUESTION DOES NOT EXIST!!</pr>)
+    }
+    else{
   return (
     <Container maxWidth="sm">
         <Card className={classes.root} paddingTop={'20%'}>
       <CardHeader
         avatar={
-            <Avatar alt="Remy Sharp" src="https://images.unsplash.com/photo-1590700722804-caef4fed22e7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80" 
+            <Avatar alt="Remy Sharp" src={props.img}
             className={classes.large} /> //ADD AVATAR URL 
         }
-        title="Asked By UserName"  //ADD THE USER Name here //ADD POLL OPTION DOWN IN THE FORM 
+        title={`Asked By ${props.authorName}`} //ADD THE USER Name here //ADD POLL OPTION DOWN IN THE FORM 
       />
       <CardContent>
       <Card className={classes.root} variant="outlined">
         <Typography variant="h5" component="h2">
-            Option1
+            {props.optionOne}
         </Typography>
         <br></br>
         <Typography variant="body2" component="p" color={'secondary'}>
           <ShowChartOutlinedIcon fontSize={'small'} color={'secondary'}/>
-          2 of 3 people voted for this option
+          {`${props.numOption1} of ${props.total} voted for this option`}
           <br />
-          {'"a benevolent smile"'}
+          {props.userVote === "optionOne" && 'You Voted For This Option!'}
         </Typography>
       </Card>
       <br></br>
       <Card className={classes.root} variant="outlined">
         <Typography variant="h5" component="h2">
-            Option1
+            {props.optionTwo}
         </Typography>
         <br></br>
         <Typography variant="body2" component="p" color={'secondary'}>
           <ShowChartOutlinedIcon fontSize={'small'} color={'secondary'}/>
-          2 of 3 people voted for this option
+          {`${props.numOption2} of ${props.total} voted for this option`}
           <br />
-          {'"a benevolent smile"'}
+          {props.userVote === "optionTwo" && 'You Voted For This Option!'}
         </Typography>
       </Card>
       </CardContent>
     </Card>
     </Container>
   );
+      }
 }
+
+function mapStateToProps({questions, authedUser, users}, props) {
+  const { id } = props.match.params
+  const exist = Object.keys(questions).includes(id)?true:false
+
+  if (exist) {
+    const question = questions[id]
+    const img = users[question.author].avatarURL
+    const authorName = users[question.author].name
+    const optionOne = question.optionOne.text
+    const optionTwo = question.optionTwo.text
+    const numOption1 = question.optionOne.votes.length
+    const numOption2 = question.optionTwo.votes.length
+    const total = numOption1 + numOption2
+    const userVote = users[authedUser].answers[id]
+
+    return{
+      id,
+      exist,
+      question,
+      img,
+      authorName,
+      optionTwo,
+      optionOne,
+      total,
+      userVote,
+      numOption2,
+      numOption1
+    }
+
+  }else{
+    return{
+      id,
+      exist
+  }
+}
+}
+
+export default connect(mapStateToProps)(Answered)

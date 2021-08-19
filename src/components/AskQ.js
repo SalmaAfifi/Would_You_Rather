@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import {addNewQuestion} from '../actions/shared'
+import { withRouter } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -47,6 +48,7 @@ function AskQ(props) {
   const [value2, setValue2] = React.useState('');
 
 
+
   const handleChange1 = (event) => {
     setValue1(event.target.value);
   };
@@ -62,8 +64,8 @@ function AskQ(props) {
       author: props.authedUser
     }
     props.dispatch(addNewQuestion(q))
-    //alert(`${value1} ${value2}`)
-    // TODO ADD THE FUNCTION IMP
+    props.history.push("/");
+
 }
 
   return (
@@ -95,6 +97,7 @@ function AskQ(props) {
 }
 
 
+
 function mapStateToProps({authedUser, users}) {
 
   const img = users[authedUser]['avatarURL']
@@ -105,4 +108,4 @@ function mapStateToProps({authedUser, users}) {
     name
   }
 }
-export default connect(mapStateToProps)(AskQ)
+export default withRouter(connect(mapStateToProps)(AskQ))

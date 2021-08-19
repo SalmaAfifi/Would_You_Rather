@@ -8,7 +8,8 @@ import AskQ from './AskQ'
 import {connect} from 'react-redux'
 import {handleInitialData} from '../actions/shared'
 import LoadingBar from 'react-redux-loading-bar'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import LeaderBoardList from './LeaderBoardList'
 
 
 class App extends Component {
@@ -17,24 +18,30 @@ class App extends Component {
   }
 
   render() {
+    if (this.props.authedUser == null) {
+      return (<SignIn></SignIn>)
+    } else{
     return (
       <Router>
       <Fragment>
-      {this.props.authedUser == null?
-      <SignIn></SignIn>:
-      <>
       <LoadingBar/>
       {this.props.loadingBar.default === 0 &&
       <NavBar/> 
       }
-
-      </>
-      }
       </Fragment>
+
+      <Switch>
+        <Route exact path="/" component={Dashboard}/>
+        <Route exact path="/add" component={AskQ}/>
+        <Route exact path="/leaderboard" component={LeaderBoardList}/>
+        <Route exact path="/question/:id" component={Unanswered}/>
+        <Route exact path="/result/:id" component={Answered}/>
+      </Switch>
       </Router>
 
     )
   }
+}
 }
 
 function mapStateToProps({loadingBar, authedUser}) {
