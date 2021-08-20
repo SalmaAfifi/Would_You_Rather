@@ -82,11 +82,12 @@ function NavBar(props) {
             <Tab label="Leader Board" {...a11yProps(2)} />
           </NavLink>
           <Grid container   direction="row" justifyContent="flex-end" alignItems="center">
+            <Tab style={{'pointer-events': 'none' }} label={`Hi, ${props.name}`}/>
+            <Avatar  src={props.img}
+            className={classes.large} />
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
             <Button color="inherit" onClick={(e)=>logout(e)}>Log Out</Button>
             </Link>
-            <Avatar  src={props.img}
-            className={classes.large} />
          </Grid>
         </Tabs>
       </AppBar>
@@ -99,9 +100,12 @@ function NavBar(props) {
 function mapStateToProps({authedUser, users}) {
 
   const img = users[authedUser]['avatarURL']
+  const name = users[authedUser]['name']
+
   return{
     img,
-    users
+    users,
+    name
   }
 }
 

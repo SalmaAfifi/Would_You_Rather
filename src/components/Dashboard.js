@@ -110,7 +110,7 @@ const answeredQ = allQuestions.filter((question)=>
   return votes1.includes(authedUser) || votes2.includes(authedUser)
 })
 const unansweredQ =  allQuestions.filter((question)=>(!answeredQ.includes(question)))
-  answeredQ.sort((a,b)=>a.timestamp-b.timestamp)
+  answeredQ.sort((a,b)=>b.timestamp-a.timestamp)
   unansweredQ.sort((a,b)=>b.timestamp-a.timestamp)
  return {answeredQ, unansweredQ}
 }

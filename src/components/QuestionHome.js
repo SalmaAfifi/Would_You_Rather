@@ -39,7 +39,7 @@ function QuestionHome(props) {
 
   const viewPoll = (e) => {
     e.preventDefault()
-    props.history.push(`/question/${props.id}`);
+    props.history.push(`/questions/${props.id}`);
 }
   return (
     <>

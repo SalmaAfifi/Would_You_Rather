@@ -10,6 +10,7 @@ import {handleInitialData} from '../actions/shared'
 import LoadingBar from 'react-redux-loading-bar'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LeaderBoardList from './LeaderBoardList'
+import PageNotFound from './PageNotFound'
 
 
 class App extends Component {
@@ -34,8 +35,8 @@ class App extends Component {
         <Route exact path="/" component={Dashboard}/>
         <Route exact path="/add" component={AskQ}/>
         <Route exact path="/leaderboard" component={LeaderBoardList}/>
-        <Route exact path="/question/:id" component={Unanswered}/>
-        <Route exact path="/result/:id" component={Answered}/>
+        <Route exact path="/questions/:id" component={Unanswered}/>
+        <Route exact path='*' component={PageNotFound}/>
       </Switch>
       </Router>
 

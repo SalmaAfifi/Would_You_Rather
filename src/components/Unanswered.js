@@ -16,6 +16,8 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import {addNewAnser} from '../actions/shared'
+import PageNotFound from './PageNotFound';
+import Answered from './answered';
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -54,14 +56,13 @@ function Unanswered(props) {
       answer: value
     }
     props.dispatch(addNewAnser(ans))
-    props.history.push(`/result/${props.id}`)
-    // TODO ADD THE FUNCTION IMP
+    return (<Answered id={props.id}/>)
 }
   if (!props.exist) {
-    return (<pr>THIS QUESTION DOES NOT EXIST!!</pr>)
+    return (<PageNotFound/>)
   }
   else if (props.answered){
-    return (<Redirect to={`/result/${props.id}`}/>)
+    return (<Answered id={props.id}/>)
   }
   else{
 
@@ -81,7 +82,7 @@ function Unanswered(props) {
         <FormLabel component="legend">Would You Rather ..?</FormLabel>
         <RadioGroup aria-label="poll" name="poll1" value={value} onChange={handleChange}>
             <FormControlLabel value="optionOne" control={<Radio />} label={props.optionOne} />  
-            <FormControlLabel value="optionTwo" control={<Radio />} label={props.optionOne} /> 
+            <FormControlLabel value="optionTwo" control={<Radio />} label={props.optionTwo} /> 
         </RadioGroup> 
     </FormControl>
 
