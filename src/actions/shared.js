@@ -1,10 +1,20 @@
 import {_getUsers, _getQuestions, _saveQuestion, _saveQuestionAnswer } from '../utils/_DATA'
-import { receiveUsers, addQToUser, addAnsToUser} from './users'
-import { receiveQuestions, addQuestion, addAnswer } from './questions'
+import { receiveUsers, addQToUser, } from './users'
+import { receiveQuestions, addQuestion } from './questions'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
+export const ADD_ANS = 'ADD_ANS'
 
 
+export function addAnswer({ authedUser, qid, answer }) {
+  return{
+    type: ADD_ANS,
+    authedUser,
+    qid,
+    answer
+  }
+  
+}
 
 export function handleInitialData () {
   return (dispatch) => {
@@ -40,7 +50,6 @@ export function addNewAnser (answer){
     dispatch(showLoading())
     return _saveQuestionAnswer(answer)
     .then(() =>{
-      dispatch(addAnsToUser(answer))
       dispatch(addAnswer(answer))
       dispatch(hideLoading())
     })

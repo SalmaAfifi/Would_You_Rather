@@ -1,4 +1,6 @@
-import { RECEIVE_QUESTIONS, ADD_QUESTION, ADD_ANS } from '../actions/questions'
+import { RECEIVE_QUESTIONS, ADD_QUESTION } from '../actions/questions'
+import { ADD_ANS } from '../actions/shared'
+
 
 
 export default function questions(state = {}, action) {

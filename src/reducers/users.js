@@ -1,4 +1,5 @@
-import { RECEIVE_USERS, ADD_QUESTION_TOUSER, ADD_ANS_TOUSER } from '../actions/users'
+import { RECEIVE_USERS, ADD_QUESTION_TOUSER } from '../actions/users'
+import { ADD_ANS } from '../actions/shared'
 
 
 export default function users (state = {}, action) {
@@ -17,7 +18,7 @@ export default function users (state = {}, action) {
           questions: state[Uid].questions.concat([Uid])
         }
       }
-    case ADD_ANS_TOUSER:
+    case ADD_ANS:
       return{
         ...state,
         [action.authedUser]: {

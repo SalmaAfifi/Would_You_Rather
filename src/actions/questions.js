@@ -1,6 +1,6 @@
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ADD_QUESTION = 'ADD_QUESTION'
-export const ADD_ANS = 'ADD_ANS'
+
 
 
 
@@ -21,15 +21,6 @@ export function addQuestion(question) {
   
 }
 
-export function addAnswer({ authedUser, qid, answer }) {
-  return{
-    type: ADD_ANS,
-    authedUser,
-    qid,
-    answer
-  }
-  
-}
 
 
 
